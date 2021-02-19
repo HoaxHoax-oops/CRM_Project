@@ -11,7 +11,7 @@
 	<script src="https://kit.fontawesome.com/64d58efce2.js"
 		crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/style.css"/>
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/img/dolphin.ico" type="image/icon type">
+	<link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/dolphin.ico" type="image/icon type">
 	<title><dec:title/></title>
 </head>
 <body>
@@ -91,7 +91,7 @@
               Sign up
             </button>
           </div>
-          <img src="${pageContext.request.contextPath}/assets/img/log.svg" class="image" alt="" />
+          <img src="${pageContext.request.contextPath}/assets/images/log.svg" class="image" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
@@ -104,11 +104,11 @@
               Sign in
             </button>
           </div>
-          <img src="${pageContext.request.contextPath}/assets/img/register.svg" class="image" alt="" />
+          <img src="${pageContext.request.contextPath}/assets/images/register.svg" class="image" alt="" />
         </div>
       </div>
     </div>
 
-    <script src="${pageContext.request.contextPath}/assets/js/app.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/app-login.js"></script>
 </body>
 </html>
