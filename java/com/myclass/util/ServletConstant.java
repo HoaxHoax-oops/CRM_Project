@@ -10,4 +10,8 @@ public class ServletConstant {
 	public static final String PATH_USER_ADD = "/user/add";
 	public static final String PATH_USER_EDIT = "/user/edit";
 	public static final String PATH_USER_DELETE = "/user/delete";
+	public static final String PATH_PROJECT = "/project";
+	public static final String PATH_PROJECT_ADD = "/project/add";
+	public static final String PATH_PROJECT_EDIT = "/project/edit";
+	public static final String PATH_PROJECT_DELETE = "/project/delete";
 }

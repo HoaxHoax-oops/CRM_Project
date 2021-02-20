@@ -20,7 +20,7 @@ public class UserRepository {
 		Connection conn = DbConnection.getConnection();
 
 		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM users");
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER");
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				User entity = new User();
@@ -28,9 +28,11 @@ public class UserRepository {
 				entity.setEmail(resultSet.getString("email"));
 				entity.setPassword(resultSet.getString("password"));
 				entity.setFullname(resultSet.getString("fullname"));
-				entity.setAvatar(resultSet.getString("avatar"));
+				entity.setAddress(resultSet.getString("address"));
 				entity.setRoleId(resultSet.getInt("role_id"));
-
+				entity.setPhone(resultSet.getString("phone"));
+				
+				
 				userList.add(entity);
 
 			}
@@ -53,7 +55,7 @@ public class UserRepository {
 			statement.setString(1, user.getEmail());
 			statement.setString(2, user.getPassword());
 			statement.setString(3, user.getFullname());
-			statement.setString(4, user.getAvatar());
+			statement.setString(4, user.getAddress());
 			statement.setInt(5, user.getRoleId());
 			
 			return statement.executeUpdate();
@@ -85,14 +87,14 @@ public class UserRepository {
 	public int editUser(User userEdit) {
 		// TODO Auto-generated method stub
 		Connection conn = DbConnection.getConnection();
-		String query  = "UPDATE users SET email = ? , password = ? , fullname = ? , avatar = ? , role_id = ? WHERE id = ?";
+		String query  = "UPDATE users SET email = ? , password = ? , fullname = ? , address = ? , role_id = ? WHERE id = ?";
 		
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, userEdit.getEmail());
 			statement.setString(2, userEdit.getPassword());
 			statement.setString(3, userEdit.getFullname());
-			statement.setString(4, userEdit.getAvatar());
+			statement.setString(4, userEdit.getAddress());
 			statement.setInt(5, userEdit.getRoleId());
 			statement.setInt(6, userEdit.getId());
 			return statement.executeUpdate();
@@ -120,7 +122,7 @@ public class UserRepository {
 				entity.setEmail(resultSet.getString("email"));
 				entity.setPassword(resultSet.getString("password"));
 				entity.setFullname(resultSet.getString("fullname"));
-				entity.setAvatar(resultSet.getString("avatar"));
+				entity.setAddress(resultSet.getString("address"));
 				entity.setRoleId(resultSet.getInt("role_id"));
 			}
 		
@@ -137,10 +139,10 @@ public class UserRepository {
 		List<UserDto> userList = new ArrayList<UserDto>();
 		Connection conn = DbConnection.getConnection();
 		UserDto entity = null;
-		String query = "SELECT USER.id, USER.email, USER.password , USER.fullname , USER.address , USER.role_id , ROLE.description	\r\n" + 
+		String query = "SELECT USER.id, USER.email, USER.password , USER.fullname , USER.address , USER.roleid , ROLE.description , USER.userName , USER.phone	\r\n" + 
 				" FROM USER\r\n" + 
 				" INNER JOIN ROLE\r\n" + 
-				" ON USER.role_id = ROLE.id";
+				" ON USER.roleid = ROLE.id";
 		
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
@@ -152,8 +154,10 @@ public class UserRepository {
 				entity.setPassword(resultSet.getString("password"));
 				entity.setFullname(resultSet.getString("fullname"));
 				entity.setAddress(resultSet.getString("address"));
-				entity.setRoleId(resultSet.getInt("role_id"));
-				entity.setRoleDescription(resultSet.getString("roles.description"));
+				entity.setPhone(resultSet.getString("phone"));
+				entity.setUserName(resultSet.getString("userName"));
+				entity.setRoleId(resultSet.getInt("roleid"));
+				entity.setRoleDescription(resultSet.getString("role.description"));
 				
 				userList.add(entity);
 
@@ -180,7 +184,7 @@ public class UserRepository {
 				entity.setEmail(resultSet.getString("email"));
 				entity.setPassword(resultSet.getString("password"));
 				entity.setFullname(resultSet.getString("fullname"));
-				entity.setAvatar(resultSet.getString("avatar"));
+				entity.setAddress(resultSet.getString("address"));
 				entity.setRoleId(resultSet.getInt("role_id"));
 			}
 			
