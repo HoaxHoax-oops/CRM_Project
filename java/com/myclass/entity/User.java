@@ -5,17 +5,21 @@ public class User {
 	private String	email;
 	private String	password;
 	private String	fullname;
-	private String	avatar;
+	private String	address;
 	private int		roleId;
+	private String	phone;
+	private String	userName;
 	
 	public User() {};
-	public User(int id, String email, String password, String fullname, String avatar, int roleId) {
+	public User(int id, String email, String password, String fullname, String address, int roleId , String phone , String userName) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.fullname = fullname;
-		this.avatar = avatar;
+		this.address = address;
 		this.roleId = roleId;
+		this.phone = phone;
+		this.userName = userName;
 	}
 	
 	public int getId() {
@@ -42,17 +46,30 @@ public class User {
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
-	public String getAvatar() {
-		return avatar;
-	}
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+
 	public int getRoleId() {
 		return roleId;
 	}
 	public void setRoleId(int i) {
 		this.roleId = i;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	
