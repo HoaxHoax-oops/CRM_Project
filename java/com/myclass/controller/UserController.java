@@ -13,59 +13,62 @@ import com.myclass.dto.RoleDto;
 import com.myclass.dto.UserDto;
 import com.myclass.service.RoleService;
 import com.myclass.service.UserService;
-import com.myclass.util.ServletConstant;
-import com.myclass.util.UserConstant;
+import com.myclass.util.ControllerUrl;
+import com.myclass.util.JspPath;
 
-@WebServlet (urlPatterns = {"/user" , "/user/add" , "/user/edit" , "/user/delete"})
+@WebServlet (name = "userController", urlPatterns = {ControllerUrl.URL_USER,
+													ControllerUrl.URL_USER_ADD,
+													ControllerUrl.URL_USER_DELETE,
+													ControllerUrl.URL_USER_EDIT})
 public class UserController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	
-
-	private RoleService		roleService;
 	private UserService		userService;
+	private RoleService		roleService;
+	
 	public UserController() {
-		roleService = new RoleService();
 		userService = new UserService();
+		roleService	= new RoleService();
 	}
 	
 		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		String action = req.getServletPath();
+		
 		switch (action) {
-		case ServletConstant.PATH_USER:
-			req.setAttribute("userList", userService.getAllUser());
-			req.getRequestDispatcher(UserConstant.URL_USER_LIST).forward(req, resp);
+		case ControllerUrl.URL_USER:{
+			List<UserDto> users = userService.getAllUser();
 			
-			
+			req.setAttribute("users", users);
+			req.getRequestDispatcher(JspPath.JSP_USER).forward(req, resp);
 			break;
-		case ServletConstant.PATH_USER_ADD:
-			List<RoleDto> roleDtos = roleService.getAll();
-			req.setAttribute("roles", roleDtos);
-			req.getRequestDispatcher(UserConstant.URL_USER_ADD).forward(req, resp);
+		}
+		case ControllerUrl.URL_USER_ADD:{
+			List<RoleDto> roles = roleService.getAll();
 			
+			req.setAttribute("roles", roles);
+			req.getRequestDispatcher(JspPath.JSP_USER_ADD).forward(req, resp);
 			break;
-		case ServletConstant.PATH_USER_DELETE:
-			int idDelete = Integer.parseInt(req.getParameter("id"));
-			int result = userService.deleteUser(idDelete);
-			if (result == -1) {
-				req.setAttribute("message", "Xóa user không thành công");
-				req.getRequestDispatcher("URL_USER_LIST").forward(req, resp);
-			}
-			else {
-				resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_USER);
-			}
-			break;
-		case ServletConstant.PATH_USER_EDIT:
-			int idEdit = Integer.parseInt(req.getParameter("id"));
+		}
+		case ControllerUrl.URL_USER_DELETE:{
+			int id = Integer.parseInt(req.getParameter("id"));
 			
-			req.setAttribute("user" , userService.getById(idEdit));
-			req.setAttribute("role" , roleService.getAll());
-			req.getRequestDispatcher(UserConstant.URL_USER_EDIT).forward(req, resp);
-			
+			userService.deleteUser(id);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_USER);
 			break;
-
-
+		}
+		case ControllerUrl.URL_USER_EDIT:{
+			int id = Integer.parseInt(req.getParameter("id"));
+			
+			List<RoleDto> roles = roleService.getAll();
+			UserDto dto = userService.getById(id);
+			
+			req.setAttribute("user", dto);
+			req.setAttribute("roles", roles);
+			req.getRequestDispatcher(JspPath.JSP_USER_EDIT).forward(req, resp);
+			break;
+		}
 		default:
 			break;
 		}
@@ -76,43 +79,41 @@ public class UserController extends HttpServlet {
 		String action = req.getServletPath();
 		
 		switch (action) {
-		case ServletConstant.PATH_USER_ADD:
-			UserDto userDto = extractUserFromRequest(req);
-			int result = userService.saveUser(userDto);
+		case ControllerUrl.URL_USER_ADD:{
+			String 	email 		= req.getParameter("email");
+			String 	password 	= req.getParameter("password");
+			String 	firstName 	= req.getParameter("firstName");
+			String 	lastName 	= req.getParameter("lastName");
+			String 	address 	= req.getParameter("address");
+			String 	phone 		= req.getParameter("phone");
+			int		roleId		= Integer.parseInt(req.getParameter("role"));
 			
-			if (result == -1) {
-				req.setAttribute("message", "Thêm user không thành công");
-				req.getRequestDispatcher(UserConstant.URL_USER_ADD).forward(req, resp);
-			}
-			else {
-				resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_USER);
-			}
-			
-			
-			
-			
+			UserDto dto = new UserDto(email, password, address, firstName, lastName, phone, roleId);
+			userService.saveUser(dto);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_USER);
 			break;
-		case ServletConstant.PATH_USER_EDIT:
-			UserDto userEditDto = extractUserFromRequest(req);
-			int idEditDto = (Integer.parseInt(req.getParameter("id")));
-			userEditDto.setId(idEditDto);
-			int resultEdit = userService.updateUser(userEditDto);
-			if(resultEdit == -1) {
-				req.setAttribute("message", "Edit user thất bại");
-				req.getRequestDispatcher(UserConstant.URL_USER_EDIT).forward(req, resp);
-			}
-			else {
-				resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_USER);
-			}
+		}
+		case ControllerUrl.URL_USER_EDIT:{
+			int		id			= Integer.parseInt(req.getParameter("id"));
+			String 	email 		= req.getParameter("email");
+			String 	password 	= req.getParameter("password");
+			String 	firstName 	= req.getParameter("firstName");
+			String 	lastName 	= req.getParameter("lastName");
+			String 	address 	= req.getParameter("address");
+			String 	phone 		= req.getParameter("phone");
+			int		roleId		= Integer.parseInt(req.getParameter("role"));
+			
+			UserDto dto = new UserDto(id, email, password, address, firstName, lastName, phone, roleId);
+			userService.updateUser(dto);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_USER);
 			break;
-
+		}
 		default:
 			break;
 		}
 	}
 
 	private UserDto extractUserFromRequest(HttpServletRequest req) {
-		// TODO Auto-generated method stub
 		UserDto userDto = new UserDto();
 		
 		userDto.setEmail(req.getParameter("email"));

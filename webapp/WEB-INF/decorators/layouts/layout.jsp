@@ -89,6 +89,7 @@
 		<jsp:include page="/WEB-INF/decorators/includes/sidedrawer.jsp"></jsp:include>
 
 	</div>
+	
 	<!-- App Settings FAB -->
 	<div id="app-settings" hidden>
 		<app-settings layout-active="fixed"

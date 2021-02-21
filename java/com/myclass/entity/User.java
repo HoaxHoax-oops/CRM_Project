@@ -1,48 +1,57 @@
 package com.myclass.entity;
 
 public class User {
-	private	int 	id;
-	private String	email;
-	private String	password;
-	private String	fullname;
+	/* properties */
+	private int		id;
+	private String 	email;
+	private String 	password;
+	private String 	fullname;
 	private String	address;
-	private int		roleId;
 	private String	phone;
-	private String	userName;
-	
-	public User() {};
-	public User(int id, String email, String password, String fullname, String address, int roleId , String phone , String userName) {
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.fullname = fullname;
-		this.address = address;
-		this.roleId = roleId;
-		this.phone = phone;
-		this.userName = userName;
+	private int 	roleId;
+
+	/* constructors */
+	public User() {
+		this.id 		= 0;
+		this.email 		= "";
+		this.password 	= "";
+		this.fullname 	= "";
+		this.address 	= "";
+		this.phone 		= "";
+		this.roleId 	= 3;
 	}
 	
-	public int getId() {
-		return id;
+	public User(String email, String password, String fullname, String address, String phone, int roleId) {
+		this.id 		= 0;
+		this.email 		= email;
+		this.password 	= password;
+		this.fullname 	= fullname;
+		this.address 	= address;
+		this.phone 		= phone;
+		this.roleId 	= roleId;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
+	/* getters/setters */
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getFullname() {
 		return fullname;
 	}
+
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
@@ -50,29 +59,33 @@ public class User {
 	public int getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int i) {
-		this.roleId = i;
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
-	public String getPhone() {
-		return phone;
+	
+	public int getId() {
+		return id;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+
+	public void setId(int id) {
+		this.id = id;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getUserName() {
-		return userName;
+
+	public String getPhone() {
+		return phone;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	
-	
-	
 
 }

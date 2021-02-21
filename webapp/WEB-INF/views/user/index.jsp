@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,242 +8,58 @@
 <title>User list</title>
 </head>
 <body>
+	<span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+		title="Disabled tooltip"> <a class="btn btn-primary"
+		href="${pageContext.request.contextPath}/user/add" role="button">
+			<i class="material-icons mr-1">add</i>ADD
+	</a>
+	</span>
 	<div class="card card-form">
-		<div class="row no-gutters">
-			<div class="col-lg-12 card-form__body border-left">
-
-
-				<div class="table-responsive border-bottom" data-toggle="lists"
-					data-lists-values='["js-lists-values-employee-name"]'>
-
-					<table class="table mb-0 thead-border-top-0">
-						<thead>
+		<div class="col-lg-12 card-form__body border-left">
+			<div class="table-responsive border-bottom" data-toggle="lists"
+				data-lists-values='["js-lists-values-employee-name"]'>
+				<table class="table mb-0 thead-border-top-0">
+					<thead>
+						<tr>
+							<th style="width: 24px;">ID</th>
+							<th>Full name</th>
+							<th style="width: 37px;">Role</th>
+							<th style="width: 120px;">Email</th>
+							<th style="width: 51px;">Phone</th>
+							<th style="width: 51px;"></th>
+						</tr>
+					</thead>
+					<tbody class="list" id="staff">
+						<c:forEach items="${ users }" var="item">
 							<tr>
-								<th style="width: 24px;">ID</th>
-								<th>Name</th>
-								<th style="width: 37px;">Role</th>
-								<th style="width: 120px;">Email</th>
-								<th style="width: 51px;">Phone</th>
-								<th style="width: 51px;"></th>
-							</tr>
-						</thead>
-						<tbody class="list" id="staff">
-							<tr class="selected">
-								<td><small class="text-muted">1</small></td>
+								<td><small class="text-muted">${ item.id }</small></td>
 								<td>
 									<div class="media align-items-center">
-										<div class="avatar avatar-xs mr-2">
-											<img src="assets/images/256_luke-porter-261779-unsplash.jpg"
-												alt="Avatar" class="avatar-img rounded-circle">
-										</div>
 										<div class="media-body">
-											<span class="js-lists-values-employee-name">Michael
-												Smith</span>
+											<span class="js-lists-values-employee-name">${ item.fullname }</span>
 										</div>
 									</div>
 								</td>
-								<td><span class="badge badge-warning">ADMIN</span></td>
-								<td>lamtrinhthong@gmail.com</td>
-								<td>(+84)775311127</td>
-								<td>
-									<div class = "btn-group btn-group-sm">
-										<button type="button" class="btn btn-danger btn-sm">
-											<i class="material-icons">close</i>
-										</button>
-										<button type="button" class="btn btn-success btn-sm">
-	                                        <i class="material-icons">thumb_up</i>
-	                                    </button>
+								<td><span class="badge badge-success">${ item.roleName }</span>
+								</td>
+								<td>${ item.email }</td>
+								<td>${ item.phone }</td>
+								<td class="text-right">
+									<div class="btn-group btn-group-sm">
+										<a role="button" class="btn btn-danger btn-sm" 
+											href="${pageContext.request.contextPath}/user/delete?id=${ item.id }">
+											<i class="material-icons">delete</i>
+										</a>
+										<a role="button" class="btn btn-success btn-sm"
+											href="${pageContext.request.contextPath}/user/edit?id=${ item.id }">
+											<i class="material-icons">create</i>
+										</a>
 									</div>
-									
 								</td>
 							</tr>
-							<tr>
-
-								<td>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox"
-											class="custom-control-input js-check-selected-row"
-											id="customCheck2_1"> <label
-											class="custom-control-label" for="customCheck2_1"><span
-											class="text-hide">Check</span></label>
-									</div>
-								</td>
-
-								<td>
-
-									<div class="media align-items-center">
-										<img src="assets/images/avatar/green.svg" class="mr-2"
-											alt="avatar" />
-										<div class="media-body">
-
-											<span class="js-lists-values-employee-name">Connie
-												Smith</span>
-
-										</div>
-									</div>
-
-								</td>
-
-
-								<td><span class="badge badge-success">USER</span></td>
-								<td><small class="text-muted">1 week ago</small></td>
-								<td>&dollar;1,943</td>
-								<td><a href="" class="text-muted"><i
-										class="material-icons">more_vert</i></a></td>
-							</tr>
-							<tr>
-
-								<td>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox"
-											class="custom-control-input js-check-selected-row"
-											id="customCheck3_1"> <label
-											class="custom-control-label" for="customCheck3_1"><span
-											class="text-hide">Check</span></label>
-									</div>
-								</td>
-
-								<td>
-
-									<div class="media align-items-center">
-
-										<div class="avatar avatar-xs mr-2">
-											<img
-												src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg"
-												alt="Avatar" class="avatar-img rounded-circle">
-										</div>
-										<div class="media-body">
-
-											<span class="js-lists-values-employee-name">John
-												Connor</span>
-
-										</div>
-									</div>
-
-								</td>
-
-
-								<td><span class="badge badge-primary">MANAGER</span></td>
-								<td><small class="text-muted">1 week ago</small></td>
-								<td>&dollar;1,943</td>
-								<td><a href="" class="text-muted"><i
-										class="material-icons">more_vert</i></a></td>
-							</tr>
-
-							<tr class="selected">
-
-								<td>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox"
-											class="custom-control-input js-check-selected-row" checked=""
-											id="customCheck1_2"> <label
-											class="custom-control-label" for="customCheck1_2"><span
-											class="text-hide">Check</span></label>
-									</div>
-								</td>
-
-								<td>
-
-									<div class="media align-items-center">
-										<div class="avatar avatar-xs mr-2">
-											<img src="assets/images/256_luke-porter-261779-unsplash.jpg"
-												alt="Avatar" class="avatar-img rounded-circle">
-										</div>
-										<div class="media-body">
-
-											<span class="js-lists-values-employee-name">Michael
-												Smith</span>
-
-										</div>
-									</div>
-
-								</td>
-
-
-								<td><span class="badge badge-warning">ADMIN</span></td>
-								<td><small class="text-muted">3 days ago</small></td>
-								<td>&dollar;12,402</td>
-								<td><a href="" class="text-muted"><i
-										class="material-icons">more_vert</i></a></td>
-							</tr>
-							<tr>
-
-								<td>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox"
-											class="custom-control-input js-check-selected-row"
-											id="customCheck2_2"> <label
-											class="custom-control-label" for="customCheck2_2"><span
-											class="text-hide">Check</span></label>
-									</div>
-								</td>
-
-								<td>
-
-									<div class="media align-items-center">
-										<img src="assets/images/avatar/green.svg" class="mr-2"
-											alt="avatar" />
-										<div class="media-body">
-
-											<span class="js-lists-values-employee-name">Connie
-												Smith</span>
-
-										</div>
-									</div>
-
-								</td>
-
-
-								<td><span class="badge badge-success">USER</span></td>
-								<td><small class="text-muted">1 week ago</small></td>
-								<td>&dollar;1,943</td>
-								<td><a href="" class="text-muted"><i
-										class="material-icons">more_vert</i></a></td>
-							</tr>
-							<tr>
-
-								<td>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox"
-											class="custom-control-input js-check-selected-row"
-											id="customCheck3_2"> <label
-											class="custom-control-label" for="customCheck3_2"><span
-											class="text-hide">Check</span></label>
-									</div>
-								</td>
-
-								<td>
-
-									<div class="media align-items-center">
-
-										<div class="avatar avatar-xs mr-2">
-											<img
-												src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg"
-												alt="Avatar" class="avatar-img rounded-circle">
-										</div>
-										<div class="media-body">
-
-											<span class="js-lists-values-employee-name">John
-												Connor</span>
-
-										</div>
-									</div>
-
-								</td>
-
-
-								<td><span class="badge badge-primary">MANAGER</span></td>
-								<td><small class="text-muted">1 week ago</small></td>
-								<td>&dollar;1,943</td>
-								<td><a href="" class="text-muted"><i
-										class="material-icons">more_vert</i></a></td>
-							</tr>
-
-						</tbody>
-					</table>
-				</div>
-
-
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

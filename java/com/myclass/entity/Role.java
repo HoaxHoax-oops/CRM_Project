@@ -1,39 +1,47 @@
 package com.myclass.entity;
 
 public class Role {
-	public	String	name;
-	public	String	description;
-	public	int		id;
-	
-	
+	/* properties */
+	private String 	name;
+	private String 	description;
+	private int 	id;
+
+	/* constructors */
+	public Role(String name, String description, int id) {
+		this.name 			= name;
+		this.description 	= description;
+		this.id 			= id;
+	}
 	
 	public Role() {
-		super();
+		this.name 			= "";
+		this.description 	= "";
+		this.id 			= 0;
 	}
-	public Role(String name, String description, int id) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.id = id;
-	}
+
+	/* getters/setters */
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
 }
