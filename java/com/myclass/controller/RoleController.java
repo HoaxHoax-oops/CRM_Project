@@ -1,8 +1,8 @@
 package com.myclass.controller;
 
 import java.io.IOException;
-import java.util.List;
 
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,57 +10,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.myclass.dto.RoleDto;
-import com.myclass.repository.RoleRepository;
 import com.myclass.service.RoleService;
-import com.myclass.util.RoleConstant;
-import com.myclass.util.ServletConstant;
+import com.myclass.util.ControllerUrl;
+import com.myclass.util.JspPath;
 
-@WebServlet(urlPatterns = {"/role","/role/add","/role/edit", "/role/delete"})
+@WebServlet(name = "roleController", urlPatterns = {ControllerUrl.URL_ROLE,
+													ControllerUrl.URL_ROLE_ADD,
+													ControllerUrl.URL_ROLE_DELETE,
+													ControllerUrl.URL_ROLE_EDIT})
 public class RoleController extends HttpServlet{
-	private RoleRepository roleRepository;
+	private static final long serialVersionUID = 1L;
+	
 	private RoleService roleService;
 	public RoleController() {
-		roleRepository = new RoleRepository();
 		roleService = new RoleService();
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
 		String action = req.getServletPath();
+		
 		switch (action) {
-		case ServletConstant.PATH_ROLE:
-			
+		case ControllerUrl.URL_ROLE:{
 			List<RoleDto> roleList = roleService.getAll();
 			
 			req.setAttribute("listRole", roleList);
-			req.getRequestDispatcher(RoleConstant.URL_ROLE_LIST).forward(req, resp);
+			req.getRequestDispatcher(JspPath.JSP_ROLE).forward(req, resp);
 			break;
-		case ServletConstant.PATH_ROLE_ADD:
+		}
+		case ControllerUrl.URL_ROLE_ADD:{
+			req.getRequestDispatcher(JspPath.JSP_ROLE_ADD).forward(req, resp);
+			break;
+		}
+		case ControllerUrl.URL_ROLE_EDIT:{
+			int id = Integer.parseInt(req.getParameter("id"));
 			
-			req.getRequestDispatcher(RoleConstant.URL_ROLE_ADD).forward(req, resp);
-			break;
-		case ServletConstant.PATH_ROLE_EDIT: 
-			int idEdit = Integer.parseInt(req.getParameter("id"));
-			RoleDto dto = roleService.finById(idEdit);
+			RoleDto dto = roleService.findById(id);
 			
 			req.setAttribute("role", dto);
-			req.getRequestDispatcher(RoleConstant.URL_ROLE_EDIT).forward(req, resp);
-			
+			req.getRequestDispatcher(JspPath.JSP_ROLE_EDIT).forward(req, resp);
 			break;
-		case ServletConstant.PATH_ROLE_DELETE:
-			int idRemove = Integer.parseInt(req.getParameter("id"));
-			int result = roleService.deleteRole(idRemove);
-			if (result == -1) {
-				req.setAttribute("message", "Delete role fail");
-				req.getRequestDispatcher(RoleConstant.URL_ROLE_LIST).forward(req, resp);
-			}
-			else {
-				resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_ROLE);
-			}
+		}
+		case ControllerUrl.URL_ROLE_DELETE:{
+			int id = Integer.parseInt(req.getParameter("id"));
 			
-			break;
-
+			roleService.deleteRole(id);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_ROLE);
+		}
 		default:
 			break;
 		}
@@ -68,44 +63,30 @@ public class RoleController extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
-		resp.setCharacterEncoding("UTF-8");
-
 		String action = req.getServletPath();
 		
-		String name = req.getParameter("name");
-		String desc = req.getParameter("desc");
-		
-		RoleDto roleDto = new RoleDto(name , desc);
 		switch (action) {
-		case ServletConstant.PATH_ROLE_ADD:
-			int result =  roleService.insert(roleDto);
-			if (result == -1) {
-				req.setAttribute("message", "Thêm thất bại");
-				req.getRequestDispatcher(RoleConstant.URL_ROLE_ADD).forward(req, resp);
-			}
-			else {
-				resp.sendRedirect (req.getContextPath() + ServletConstant.PATH_ROLE);
-			}
+		case ControllerUrl.URL_ROLE_ADD:{
+			String rolename = req.getParameter("name");
+			String desc		= req.getParameter("description");
+			
+			RoleDto dto = new RoleDto(rolename, desc);
+			roleService.insert(dto);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_ROLE);
 			break;
-		case ServletConstant.PATH_ROLE_EDIT:
-			int id = Integer.parseInt(req.getParameter("id"));
-			roleDto.setId(id);
-			if (roleService.editRole(roleDto) == -1) {
-				req.setAttribute("message", "Cập nhật thất bại");
-				req.getRequestDispatcher(RoleConstant.URL_ROLE_EDIT).forward(req, resp);
-			}
-			else {
-				resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_ROLE);
-			}
+		}
+		case ControllerUrl.URL_ROLE_EDIT:{
+			int		id			= Integer.parseInt(req.getParameter("id"));
+			String 	rolename 	= req.getParameter("name");
+			String 	desc		= req.getParameter("description");
+			
+			RoleDto dto = new RoleDto(id, rolename, desc);
+			roleService.editRole(dto);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_ROLE);
 			break;
-
+		}
 		default:
 			break;
 		}
-		
 	}
-	
-	
-
 }

@@ -1,7 +1,6 @@
 package com.myclass.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,78 +9,77 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.myclass.dto.ProjectDto;
 import com.myclass.service.ProjectService;
-import com.myclass.util.HomeConstant;
-import com.myclass.util.ProjectConstant;
-import com.myclass.util.ServletConstant;
-import com.myclass.util.UserConstant;
+import com.myclass.util.ControllerUrl;
+import com.myclass.util.JspPath;
 
-@WebServlet(urlPatterns = {"/project" , "/project/add"})
-public class ProjectController extends HttpServlet{
+@WebServlet(urlPatterns = { "/project", "/project/add" })
+public class ProjectController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	private ProjectService projectService;
+
 	public ProjectController() {
 		projectService = new ProjectService();
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
 		switch (action) {
-		case ServletConstant.PATH_PROJECT:
+		case ControllerUrl.URL_PROJECT:
 			req.setAttribute("projectList", projectService.getAll());
-			req.getRequestDispatcher(ProjectConstant.URL_PROJECT_LIST).forward(req, resp);
-			
+			req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
+
 			break;
-		case ServletConstant.PATH_PROJECT_DELETE:
+		case ControllerUrl.URL_PROJECT_DELETE:
 			int idDelete = Integer.parseInt(req.getParameter("id"));
 			int result = projectService.deleteUser(idDelete);
 			if (result == -1) {
 				req.setAttribute("message", "Xóa user không thành công");
 				req.getRequestDispatcher("URL_PROJECT_LIST").forward(req, resp);
-			}
-			else {
-				resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_PROJECT);
+			} else {
+				resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_PROJECT);
 			}
 			break;
-		case ServletConstant.PATH_PROJECT_ADD:
-			req.getRequestDispatcher(ProjectConstant.URL_PROJECT_ADD).forward(req, resp);
+		case ControllerUrl.URL_PROJECT_ADD:
+			req.getRequestDispatcher(JspPath.JSP_PROJECT_ADD).forward(req, resp);
 			break;
-		case ServletConstant.PATH_PROJECT_EDIT:
+		case ControllerUrl.URL_PROJECT_EDIT:
 			req.setAttribute("project", projectService.getById(Integer.parseInt(req.getParameter("id"))));
-			req.getRequestDispatcher(ProjectConstant.URL_PROJECT_ADD).forward(req, resp);	
+			req.getRequestDispatcher(JspPath.JSP_PROJECT_EDIT).forward(req, resp);
 		default:
 			break;
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
 		switch (action) {
-		case ServletConstant.PATH_PROJECT_ADD:
+		case ControllerUrl.URL_PROJECT_ADD:
 			ProjectDto projectDto = extractUserFromRequest(req);
-			int result =  projectService.add(projectDto);
+			int result = projectService.add(projectDto);
 			if (result == -1) {
 				req.setAttribute("message", "Thêm project thất bại");
-				req.getRequestDispatcher(ProjectConstant.URL_PROJECT_ADD).forward(req, resp);
+				req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
 				return;
 			}
-			resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_PROJECT);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_PROJECT);
 			break;
-		case ServletConstant.PATH_PROJECT_EDIT:
+		case ControllerUrl.URL_PROJECT_EDIT:
 			ProjectDto dto = extractUserFromRequest(req);
 			dto.setId(Integer.parseInt(req.getParameter("id")));
 			int resultEdit = projectService.update(dto);
 			if (projectService.update(dto) == -1) {
 				req.setAttribute("message", "Edit project thất bại");
-				req.getRequestDispatcher(ProjectConstant.URL_PROJECT_EDIT).forward(req, resp);
+				req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
 				return;
 			}
-			resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_PROJECT);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_PROJECT);
 		default:
 			break;
 		}
-		
-		
+
 	}
 
 	private ProjectDto extractUserFromRequest(HttpServletRequest req) {
@@ -92,7 +90,7 @@ public class ProjectController extends HttpServlet{
 		projectDto.setStartDate(req.getParameter("startDate"));
 		projectDto.setEndDate(req.getParameter("endDate"));
 		projectDto.setCreateUser(Integer.parseInt(req.getParameter("createUser")));
-		
+
 		return projectDto;
 	}
 }

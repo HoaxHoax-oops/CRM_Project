@@ -16,4 +16,9 @@ public class JspPath {
 	public static final String JSP_USER 		= "/WEB-INF/views/user/index.jsp";
 	public static final String JSP_USER_ADD 	= "/WEB-INF/views/user/add.jsp";
 	public static final String JSP_USER_EDIT 	= "/WEB-INF/views/user/edit.jsp";
+	
+	/* URL jsp file for projectServlet */
+	public static final String JSP_PROJECT 		= "/WEB-INF/views/project/index.jsp";
+	public static final String JSP_PROJECT_ADD 	= "/WEB-INF/views/project/add.jsp";
+	public static final String JSP_PROJECT_EDIT = "/WEB-INF/views/project/edit.jsp";
 }

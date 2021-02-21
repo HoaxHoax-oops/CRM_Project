@@ -1,167 +1,146 @@
 package com.myclass.dto;
 
 public class UserDto {
-	private	int 	id;
-	private String	email;
-	private String	password;
-	private String	fullname;
-	private String	address;
-	private int		roleId;
-	private String	roleDescription;
-	private String	roleName;
-	private String	phone;
-	private String	userName;
-	
-	public UserDto() {};
-	
+	/* properties */
+	private int 	id;
+	private String 	password;
+	private String 	email;
+	private String 	address;
+	private String 	fullname;
+	private String 	phone;
+	private int 	roleId;
+	private String 	firstName;
+	private String 	lastName;
+	private String 	roleName;
 
-
-	public UserDto(int id, String email, String password, String fullname, String address, int roleId,
-			String roleDescription, String roleName, String phone , String userName) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.fullname = fullname;
-		this.address = address;
-		this.roleId = roleId;
-		this.roleDescription = roleDescription;
-		this.roleName = roleName;
-		this.phone = phone;
-		this.userName = userName;
+	/* constructors */
+	public UserDto(int id, String email, String password, String address, String firstName, String lastName, String phone,
+			int roleId) {
+		this.id 		= id;
+		this.password 	= password;
+		this.email 		= email;
+		this.address 	= address;
+		this.phone 		= phone;
+		this.firstName 	= firstName;
+		this.lastName 	= lastName;
+		this.roleId 	= roleId;
 	}
 
-
-	public UserDto(int id, String email, String password, String fullname, String avatar, int roleId) {
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.fullname = fullname;
-		this.address = address;
-		this.roleId = roleId;
+	public UserDto() {
+		this.id 		= 0;
+		this.password 	= "";
+		this.email 		= "";
+		this.address 	= "";
+		this.fullname 	= "";
+		this.phone 		= "";
+		this.roleId 	= 0;
+		this.roleName 	= "";
 	}
 
+	public UserDto(String email, String password, String address, String firstName, String lastName, String phone,
+			int roleId) {
+		this.password 	= password;
+		this.email 		= email;
+		this.address 	= address;
+		this.phone 		= phone;
+		this.firstName 	= firstName;
+		this.lastName 	= lastName;
+		this.roleId 	= roleId;
+	}
 
-
+	/* getters/setters */
 	public int getId() {
 		return id;
 	}
-
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-
-
-	public String getFullname() {
-		return fullname;
+	public String getEmail() {
+		return email;
 	}
 
-
-
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-
 
 	public String getAddress() {
 		return address;
 	}
 
-
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-
-
-	public int getRoleId() {
-		return roleId;
+	public String getFullname() {
+		return fullname;
 	}
 
-
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
-
-
-
-	public String getRoleDescription() {
-		return roleDescription;
-	}
-
-
-
-	public void setRoleDescription(String roleDescription) {
-		this.roleDescription = roleDescription;
-	}
-
-
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-
 
 	public String getPhone() {
 		return phone;
 	}
 
-
-
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-
-
-	public String getUserName() {
-		return userName;
+	public int getRoleId() {
+		return roleId;
 	}
 
-
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
+	public String getRoleName() {
+		return roleName;
+	}
 
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 
+	public String getFirstName() {
+		return firstName;
+	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/* methods */
+	public boolean splitFullname() {
+		if("".equals(fullname))
+			return false;
+		
+		int idx = fullname.lastIndexOf(' ');
+		if(idx == -1)
+			return false;
+		
+		this.firstName 	= fullname.substring(0, idx	);
+		this.lastName	= fullname.substring(idx + 1);
+		
+		return true;
+	}
 }
