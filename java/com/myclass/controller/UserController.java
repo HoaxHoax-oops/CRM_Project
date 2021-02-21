@@ -113,4 +113,20 @@ public class UserController extends HttpServlet {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	private UserDto extractUserFromRequest(HttpServletRequest req) {
+		UserDto userDto = new UserDto();
+		
+		userDto.setEmail(req.getParameter("email"));
+		userDto.setPassword(req.getParameter("password"));
+		userDto.setFullname(req.getParameter("fullname"));
+		userDto.setAddress(req.getParameter("address"));
+		userDto.setRoleId(Integer.parseInt(req.getParameter("roleId")));
+		
+		return userDto;
+	}
+	
+
+>>>>>>> 900c480ac6f7ce6de50b898db80162fdd25b92e3
 }

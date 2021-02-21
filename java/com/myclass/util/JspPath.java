@@ -21,9 +21,12 @@ public class JspPath {
 	public static final String JSP_PROJECT 		= "/WEB-INF/views/project/index.jsp";
 	public static final String JSP_PROJECT_ADD 	= "/WEB-INF/views/project/add.jsp";
 	public static final String JSP_PROJECT_EDIT = "/WEB-INF/views/project/edit.jsp";
+<<<<<<< HEAD
 	
 	/* URL jsp file for taskServlet */
 	public static final String JSP_TASK 		= "/WEB-INF/views/task/index.jsp";
 	public static final String JSP_TASK_ADD 	= "/WEB-INF/views/task/add.jsp";
 	public static final String JSP_TASK_EDIT 	= "/WEB-INF/views/task/edit.jsp";
+=======
+>>>>>>> 900c480ac6f7ce6de50b898db80162fdd25b92e3
 }

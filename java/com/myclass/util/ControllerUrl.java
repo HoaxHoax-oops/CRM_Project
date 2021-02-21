@@ -21,6 +21,7 @@ public class ControllerUrl {
 	public final static String URL_USER_DELETE 	= "/user/delete";
 	
 	// url for ProjectController
+<<<<<<< HEAD
 	public final static String URL_PROJECT 			= "/project";
 	public final static String URL_PROJECT_ADD 		= "/project/add";
 	public final static String URL_PROJECT_EDIT 	= "/project/edit";
@@ -31,4 +32,10 @@ public class ControllerUrl {
 	public final static String URL_TASK_ADD 	= "/task/add";
 	public final static String URL_TASK_EDIT 	= "/task/edit";
 	public final static String URL_TASK_DELETE 	= "/task/delete";
+=======
+	public final static String URL_PROJECT 		= "/project";
+	public final static String URL_PROJECT_ADD 	= "/project/add";
+	public final static String URL_PROJECT_EDIT 	= "/project/edit";
+	public final static String URL_PROJECT_DELETE 	= "/project/delete";
+>>>>>>> 900c480ac6f7ce6de50b898db80162fdd25b92e3
 }
