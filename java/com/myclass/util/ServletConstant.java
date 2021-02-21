@@ -14,4 +14,8 @@ public class ServletConstant {
 	public static final String PATH_PROJECT_ADD = "/project/add";
 	public static final String PATH_PROJECT_EDIT = "/project/edit";
 	public static final String PATH_PROJECT_DELETE = "/project/delete";
+	public static final String PATH_TASK = "/task";
+	public static final String PATH_TASK_ADD = "/task/add";
+	public static final String PATH_TASK_EDIT = "/task/edit";
+	public static final String PATH_TASK_DELETE = "/task/delete";
 }

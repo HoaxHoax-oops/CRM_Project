@@ -58,7 +58,7 @@ public class ProjectController extends HttpServlet{
 		String action = req.getServletPath();
 		switch (action) {
 		case ServletConstant.PATH_PROJECT_ADD:
-			ProjectDto projectDto = extractUserFromRequest(req);
+			ProjectDto projectDto = extractProjectFromRequest(req);
 			int result =  projectService.add(projectDto);
 			if (result == -1) {
 				req.setAttribute("message", "Thêm project thất bại");
@@ -68,7 +68,7 @@ public class ProjectController extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_PROJECT);
 			break;
 		case ServletConstant.PATH_PROJECT_EDIT:
-			ProjectDto dto = extractUserFromRequest(req);
+			ProjectDto dto = extractProjectFromRequest(req);
 			dto.setId(Integer.parseInt(req.getParameter("id")));
 			int resultEdit = projectService.update(dto);
 			if (projectService.update(dto) == -1) {
@@ -84,7 +84,7 @@ public class ProjectController extends HttpServlet{
 		
 	}
 
-	private ProjectDto extractUserFromRequest(HttpServletRequest req) {
+	private ProjectDto extractProjectFromRequest(HttpServletRequest req) {
 		// TODO Auto-generated method stub
 		ProjectDto projectDto = new ProjectDto();
 		projectDto.setName(req.getParameter("name"));
