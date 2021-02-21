@@ -1,7 +1,6 @@
 package com.myclass.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,73 +9,76 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.myclass.dto.ProjectDto;
 import com.myclass.dto.TaskDto;
 import com.myclass.service.TaskService;
-import com.myclass.util.ServletConstant;
-import com.myclass.util.TaskConstant;
+import com.myclass.util.ControllerUrl;
+import com.myclass.util.JspPath;
 
-@WebServlet(urlPatterns = {"/task" , "/task/add" , "/task/edit" + "/task/delete"})
-public class TaskController extends HttpServlet{
+@WebServlet(name = "taskController", urlPatterns = { ControllerUrl.URL_TASK,
+													ControllerUrl.URL_TASK_ADD,
+													ControllerUrl.URL_TASK_DELETE,
+													ControllerUrl.URL_TASK_EDIT})
+public class TaskController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	
 	private TaskService taskService;
-	
+
 	public TaskController() {
 		taskService = new TaskService();
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
 		switch (action) {
-		case ServletConstant.PATH_TASK:
+		case ControllerUrl.URL_TASK:
 			List<TaskDto> taskList = taskService.getAll();
-			
-			req.setAttribute("taskList",taskList);
-			req.getRequestDispatcher(TaskConstant.URL_TASK_LIST).forward(req, resp);
+
+			req.setAttribute("taskList", taskList);
+			req.getRequestDispatcher(JspPath.JSP_TASK).forward(req, resp);
 			break;
-		case ServletConstant.PATH_TASK_DELETE:
+		case ControllerUrl.URL_TASK_DELETE:
 			int idDel = Integer.parseInt(req.getParameter("id"));
 			int result = taskService.delete(idDel);
 			if (result == -1) {
 				req.setAttribute("message", "Xóa task thất bại");
-				req.getRequestDispatcher(TaskConstant.URL_TASK_LIST).forward(req, resp);
+				req.getRequestDispatcher(JspPath.JSP_TASK).forward(req, resp);
 			}
-			resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_TASK);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_TASK);
 			break;
-		case ServletConstant.PATH_TASK_ADD:
-			req.getRequestDispatcher(TaskConstant.URL_TASK_ADD).forward(req, resp);
+		case ControllerUrl.URL_TASK_ADD:
+			req.getRequestDispatcher(JspPath.JSP_TASK_ADD).forward(req, resp);
 			break;
-		case ServletConstant.PATH_TASK_EDIT:
-			
+		case ControllerUrl.URL_TASK_EDIT:
+
 			break;
 
 		default:
 			break;
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
 		switch (action) {
-		case ServletConstant.PATH_TASK_ADD:
+		case ControllerUrl.URL_TASK_ADD:
 			TaskDto dto = extractTaskFromRequest(req);
 			int result = taskService.add(dto);
 			if (result == -1) {
 				req.setAttribute("message", "Thêm task thất bại");
-				req.getRequestDispatcher(TaskConstant.URL_TASK_ADD).forward(req, resp);
+				req.getRequestDispatcher(JspPath.JSP_TASK_ADD).forward(req, resp);
 			}
-			resp.sendRedirect(req.getContextPath() + ServletConstant.PATH_TASK);
+			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_TASK_ADD);
 			break;
-		case ServletConstant.PATH_TASK_EDIT:
-			
+		case ControllerUrl.URL_TASK_EDIT:
+
 			break;
 		default:
 			break;
 		}
 	}
-	
+
 	private TaskDto extractTaskFromRequest(HttpServletRequest req) {
 		// TODO Auto-generated method stub
 		TaskDto taskDto = new TaskDto();
@@ -89,7 +91,7 @@ public class TaskController extends HttpServlet{
 		taskDto.setProjectId(Integer.parseInt(req.getParameter("projectId")));
 		taskDto.setUserId(Integer.parseInt(req.getParameter("userId")));
 		taskDto.setCategoryId(Integer.parseInt(req.getParameter("categoryId")));
-		
+
 		return taskDto;
 	}
 }

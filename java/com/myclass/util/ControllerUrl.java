@@ -19,4 +19,16 @@ public class ControllerUrl {
 	public final static String URL_USER_ADD 	= "/user/add";
 	public final static String URL_USER_EDIT 	= "/user/edit";
 	public final static String URL_USER_DELETE 	= "/user/delete";
+	
+	// url for ProjectController
+	public final static String URL_PROJECT 			= "/project";
+	public final static String URL_PROJECT_ADD 		= "/project/add";
+	public final static String URL_PROJECT_EDIT 	= "/project/edit";
+	public final static String URL_PROJECT_DELETE 	= "/project/delete";
+	
+	// url for TaskController
+	public final static String URL_TASK 		= "/task";
+	public final static String URL_TASK_ADD 	= "/task/add";
+	public final static String URL_TASK_EDIT 	= "/task/edit";
+	public final static String URL_TASK_DELETE 	= "/task/delete";
 }

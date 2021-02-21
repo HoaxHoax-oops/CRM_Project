@@ -61,6 +61,10 @@
 </head>
 
 <body class="layout-fixed">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+	
 	<div class="preloader"></div>
 
 	<!-- Header Layout -->
@@ -89,6 +93,7 @@
 		<jsp:include page="/WEB-INF/decorators/includes/sidedrawer.jsp"></jsp:include>
 
 	</div>
+	
 	<!-- App Settings FAB -->
 	<div id="app-settings" hidden>
 		<app-settings layout-active="fixed"

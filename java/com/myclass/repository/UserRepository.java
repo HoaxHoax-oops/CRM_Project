@@ -7,202 +7,186 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.myclass.connecttion.DbConnection;
+import com.myclass.connection.DbConnection;
 import com.myclass.dto.UserDto;
-import com.myclass.entity.Role;
 import com.myclass.entity.User;
-import com.mysql.cj.xdevapi.Result;
 
 public class UserRepository {
-
-	public List<User> findAll() {
-		List<User> userList = new ArrayList<User>();
-		Connection conn = DbConnection.getConnection();
-
-		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER");
-			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				User entity = new User();
-				entity.setId(resultSet.getInt("id"));
-				entity.setEmail(resultSet.getString("email"));
-				entity.setPassword(resultSet.getString("password"));
-				entity.setFullname(resultSet.getString("fullname"));
-				entity.setAddress(resultSet.getString("address"));
-				entity.setRoleId(resultSet.getInt("role_id"));
-				entity.setPhone(resultSet.getString("phone"));
-				
-				
-				userList.add(entity);
-
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return userList;
-	}
-
 	public int addUser(User user) {
-		// TODO Auto-generated method stub
 		Connection conn = DbConnection.getConnection();
-		String query = "INSERT INTO USER (email , password , fullname , avatar , role_id) value ( ? , ? , ? , ? , ?)";
-
+		
+		if(conn == null)
+			return 0;
+		
+		String query = "INSERT INTO USER (email , password , fullname , address , phone, roleid) value (? , ? , ? , ? , ?, ?)";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
-			
+
 			statement.setString(1, user.getEmail());
 			statement.setString(2, user.getPassword());
 			statement.setString(3, user.getFullname());
 			statement.setString(4, user.getAddress());
-			statement.setInt(5, user.getRoleId());
+			statement.setString(5, user.getPhone());
+			statement.setInt(6, user.getRoleId());
+
+			return statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public int remove(int id) {
+		Connection conn = DbConnection.getConnection();
+		
+		if(conn == null)
+			return 0;
+		
+		String query = "DELETE FROM USER WHERE id=?";
+		try {
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, id);
 			
 			return statement.executeUpdate();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;
-	}
-
-	public int remove(int idDelete) {
-		// TODO Auto-generated method stub
-		Connection conn = DbConnection.getConnection();
-		String query = "DELETE FROM USER WHERE id=?";
-		try {
-			PreparedStatement statement = conn.prepareStatement(query);
-			statement.setInt(1, idDelete);
-			statement.executeUpdate();
-			return 1;
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return -1;
+		return 0;
 	}
 
 	public int editUser(User userEdit) {
-		// TODO Auto-generated method stub
 		Connection conn = DbConnection.getConnection();
-		String query  = "UPDATE USER SET email = ? , password = ? , fullname = ? , address = ? , role_id = ? WHERE id = ?";
 		
+		if(conn == null)
+			return 0;
+		
+		String query = "UPDATE USER SET email = ?, password = ?, fullname = ?, address = ?, phone = ?, roleid = ? WHERE id = ?";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, userEdit.getEmail());
 			statement.setString(2, userEdit.getPassword());
 			statement.setString(3, userEdit.getFullname());
 			statement.setString(4, userEdit.getAddress());
-			statement.setInt(5, userEdit.getRoleId());
-			statement.setInt(6, userEdit.getId());
+			statement.setString(5, userEdit.getPhone());
+			statement.setInt(6, userEdit.getRoleId());
+			statement.setInt(7, userEdit.getId());
+			
 			return statement.executeUpdate();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return -1;
+
+		return 0;
 	}
 
-	public User findById(int idEdit) {
-		// TODO Auto-generated method stub
+	public User findById(int id) {
 		Connection conn = DbConnection.getConnection();
-		User entity = null;
+		
+		if(conn == null)
+			return null;
+		
 		String query = "SELECT * FROM USER WHERE id=?";
-		
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
-			statement.setInt(1, idEdit);
+			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				entity = new User();
+			while (resultSet.next()) {
+				User entity = new User();
+				
 				entity.setId(resultSet.getInt("id"));
 				entity.setEmail(resultSet.getString("email"));
 				entity.setPassword(resultSet.getString("password"));
-				entity.setFullname(resultSet.getString("fullname"));
 				entity.setAddress(resultSet.getString("address"));
-				entity.setRoleId(resultSet.getInt("role_id"));
+				entity.setFullname(resultSet.getString("fullname"));
+				entity.setPhone(resultSet.getString("phone"));
+				entity.setRoleId(resultSet.getInt("roleid"));
+				
+				return entity;
 			}
-		
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return entity;
+		return null;
 	}
 
-
+	// method get all userDto
 	public List<UserDto> getAll() {
-		// TODO Auto-generated method stub
-		List<UserDto> userList = new ArrayList<UserDto>();
 		Connection conn = DbConnection.getConnection();
-		UserDto entity = null;
-		String query = "SELECT USER.id, USER.email, USER.password , USER.fullname , USER.address , USER.roleid , ROLE.description , USER.userName , USER.phone	\r\n" + 
-				" FROM USER\r\n" + 
-				" INNER JOIN ROLE\r\n" + 
-				" ON USER.roleid = ROLE.id";
 		
+		if(conn == null)
+			return null;
+		
+		List<UserDto> users = new ArrayList<UserDto>();
+		String query = "SELECT\r\n"
+						+ "	U.id,\r\n"
+						+ "	U.email,\r\n"
+						+ "	U.fullname,\r\n"
+						+ "	U.phone,\r\n"
+						+ "	R.`name` `roleName`\r\n"
+					+ "FROM\r\n"
+						+ "	ROLE R,\r\n"
+						+ "	USER U\r\n"
+					+ "WHERE\r\n"
+						+ "	R.id = U.roleid\r\n"
+					+ "ORDER BY\r\n"
+						+ "	U.id;";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				entity = new UserDto();
-				entity.setId(resultSet.getInt("id"));
-				entity.setEmail(resultSet.getString("email"));
-				entity.setPassword(resultSet.getString("password"));
-				entity.setFullname(resultSet.getString("fullname"));
-				entity.setAddress(resultSet.getString("address"));
-				entity.setPhone(resultSet.getString("phone"));
-				entity.setUserName(resultSet.getString("userName"));
-				entity.setRoleId(resultSet.getInt("roleid"));
-				entity.setRoleDescription(resultSet.getString("role.description"));
+			while (resultSet.next()) {
+				UserDto dto = new UserDto();
 				
-				userList.add(entity);
-
+				dto.setId(resultSet.getInt("id"));
+				dto.setEmail(resultSet.getString("email"));
+				dto.setFullname(resultSet.getString("fullname"));
+				dto.setPhone(resultSet.getString("phone"));
+				dto.setRoleName(resultSet.getString("roleName"));
+				
+				users.add(dto);
 			}
+			
+			return users;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return userList;
+		return null;
 	}
 
 	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
-		User entity = null;
 		Connection conn = DbConnection.getConnection();
+		
+		if(conn == null)
+			return null;
+		
 		String query = "SELECT * FROM USER WHERE email = ?";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, email);
 			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				entity = new User();
+			
+			while(resultSet.next()) {
+				User entity = new User();
+				
 				entity.setId(resultSet.getInt("id"));
 				entity.setEmail(resultSet.getString("email"));
 				entity.setPassword(resultSet.getString("password"));
-				entity.setFullname(resultSet.getString("fullname"));
 				entity.setAddress(resultSet.getString("address"));
-				entity.setRoleId(resultSet.getInt("role_id"));
+				entity.setFullname(resultSet.getString("fullname"));
+				entity.setPhone(resultSet.getString("phone"));
+				entity.setRoleId(resultSet.getInt("roleid"));
+				
+				return entity;
 			}
-			
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return entity;
+
+		return null;
 	}
-
-	public int checkPass(User entity) {
-		// TODO Auto-generated method stub
-		
-		return -1;
-	}
-
-
-
 
 }

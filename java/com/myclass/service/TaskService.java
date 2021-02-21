@@ -8,9 +8,9 @@ import com.myclass.entity.Task;
 import com.myclass.repository.TaskRepository;
 
 public class TaskService {
-	
+
 	private TaskRepository taskRepository;
-	
+
 	public TaskService() {
 		taskRepository = new TaskRepository();
 	}

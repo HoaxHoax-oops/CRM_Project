@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.myclass.connecttion.DbConnection;
+import com.myclass.connection.DbConnection;
 import com.myclass.dto.TaskDto;
 import com.myclass.entity.Task;
 
@@ -61,7 +61,7 @@ public class TaskRepository {
 		// TODO Auto-generated method stub
 		Connection conn = DbConnection.getConnection();
 		String query = "INSERT INTO TASK (name , description , startDate , endDate , userId , createUserId , projectId , statusId , categoryId)"
-				+"value (? , ? , ? , ? , ? , ? , ? ,? , ?)";
+				+ "value (? , ? , ? , ? , ? , ? , ? ,? , ?)";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, entity.getName());
