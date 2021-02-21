@@ -48,14 +48,11 @@ public class UserDto {
 		this.roleId 	= roleId;
 	}
 
-<<<<<<< HEAD
 	public UserDto(String email, String password) {
 		this.password 	= password;
 		this.email 		= email;
 	}
 
-=======
->>>>>>> 900c480ac6f7ce6de50b898db80162fdd25b92e3
 	/* getters/setters */
 	public int getId() {
 		return id;
