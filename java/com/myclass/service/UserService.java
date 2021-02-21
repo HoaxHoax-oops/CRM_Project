@@ -23,25 +23,27 @@ public class UserService {
 	public List<UserDto> getAllUser() {
 		// TODO Auto-generated method stub
 			List<UserDto> entities = userRepository.getAll();
-			List<UserDto> listUserDto = new ArrayList<UserDto>();
-			for (UserDto entity : entities) {
-				UserDto dto = new UserDto();
-				dto.setId(entity.getId());
-				dto.setEmail(entity.getEmail());
-				dto.setPassword(entity.getPassword());
-				dto.setFullname(entity.getFullname());
-				dto.setAddress(entity.getAddress());
-				dto.setRoleId(entity.getRoleId());
-				dto.setRoleDescription(entity.getRoleDescription());
-				//lấy ra thông tin role dựa vào khóa ngoại
-				Role role = roleRepository.findById(entity.getRoleId());
-				dto.setRoleDescription(role.getDescription());
-				
-				listUserDto.add(dto);
-			}
+//			List<UserDto> listUserDto = new ArrayList<UserDto>();
+//			for (UserDto entity : entities) {
+//				UserDto dto = new UserDto();
+//				dto.setId(entity.getId());
+//				dto.setEmail(entity.getEmail());
+//				dto.setPassword(entity.getPassword());
+//				dto.setFullname(entity.getFullname());
+//				dto.setAddress(entity.getAddress());
+//				dto.setRoleId(entity.getRoleId());
+//				dto.setPhone(entity.getPhone());
+//				dto.setUserName(entity.getUserName());
+//				dto.setRoleDescription(entity.getRoleDescription());
+//				//lấy ra thông tin role dựa vào khóa ngoại
+//				Role role = roleRepository.findById(entity.getRoleId());
+//				dto.setRoleDescription(role.getDescription());
+//				
+//				listUserDto.add(dto);
+//			}
 
 		// nếu chạy câu lệnh này thì k cần chạy vòng lặp trog service
-		return listUserDto;
+		return entities;
 	}
 
 	public int saveUser(UserDto userDto) {
@@ -52,7 +54,7 @@ public class UserService {
 			entity.setEmail(userDto.getEmail());
 			entity.setPassword(hashed);
 			entity.setFullname(userDto.getFullname());
-			entity.setAvatar(userDto.getAddress());
+			entity.setAddress(userDto.getAddress());
 			entity.setRoleId(userDto.getRoleId());
 			return userRepository.addUser(entity);
 		} catch (Exception e) {
@@ -70,7 +72,7 @@ public class UserService {
 				entity.setEmail(userEditDto.getEmail());
 				entity.setPassword(userEditDto.getPassword());
 				entity.setFullname(userEditDto.getFullname());
-				entity.setAvatar(userEditDto.getAddress());
+				entity.setAddress(userEditDto.getAddress());
 				entity.setRoleId(userEditDto.getRoleId());
 			}
 			;
@@ -96,7 +98,7 @@ public class UserService {
 		// TODO Auto-generated method stub
 		User entity = userRepository.findById(idEdit);
 		UserDto dto = new UserDto(entity.getId(), entity.getEmail(), entity.getPassword(), entity.getFullname(),
-				entity.getAvatar(), entity.getRoleId());
+				entity.getAddress(), entity.getRoleId());
 
 		return dto;
 	}
