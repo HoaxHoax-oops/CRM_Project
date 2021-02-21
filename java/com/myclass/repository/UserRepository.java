@@ -158,15 +158,11 @@ public class UserRepository {
 
 	public User findByEmail(String email) {
 		Connection conn = DbConnection.getConnection();
-<<<<<<< HEAD
 		
 		if(conn == null)
 			return null;
 		
 		String query = "SELECT * FROM USER WHERE email = ?";
-=======
-		String query = "SELECT * FROM users WHERE email = ?";
->>>>>>> 900c480ac6f7ce6de50b898db80162fdd25b92e3
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, email);
@@ -178,35 +174,19 @@ public class UserRepository {
 				entity.setId(resultSet.getInt("id"));
 				entity.setEmail(resultSet.getString("email"));
 				entity.setPassword(resultSet.getString("password"));
-<<<<<<< HEAD
 				entity.setAddress(resultSet.getString("address"));
 				entity.setFullname(resultSet.getString("fullname"));
 				entity.setPhone(resultSet.getString("phone"));
 				entity.setRoleId(resultSet.getInt("roleid"));
 				
 				return entity;
-=======
-				entity.setFullname(resultSet.getString("fullname"));
-				entity.setRoleId(resultSet.getInt("role_id"));
->>>>>>> 900c480ac6f7ce6de50b898db80162fdd25b92e3
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
 
 		return null;
-=======
-
-		return entity;
-	}
-
-	public int checkPass(User entity) {
-		// TODO Auto-generated method stub
-
-		return -1;
->>>>>>> 900c480ac6f7ce6de50b898db80162fdd25b92e3
 	}
 
 }
