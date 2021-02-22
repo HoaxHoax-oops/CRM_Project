@@ -7,17 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.myclass.connecttion.DbConnection;
+import com.myclass.connection.DbConnection;
 import com.myclass.dto.ProjectDto;
 import com.myclass.entity.Project;
 
 public class ProjectRepository {
 
 	public List<ProjectDto> findAll() {
-		// TODO Auto-generated method stub
-		List<ProjectDto> projectList = new ArrayList<ProjectDto>();
 		Connection conn = DbConnection.getConnection();
-		ProjectDto entity = null;
+		
+		if(conn == null)
+			return null;
+		
+		List<ProjectDto> projectList = new ArrayList<ProjectDto>();
 		String query = "SELECT PROJECT.id, PROJECT.name, PROJECT.description , PROJECT.startDate , PROJECT.endDate , PROJECT.createUser , USER.userName\r\n" + 
 				" FROM PROJECT\r\n" + 
 				" INNER JOIN USER\r\n" + 
@@ -26,6 +28,8 @@ public class ProjectRepository {
 			PreparedStatement statement = conn.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
+				ProjectDto entity = new ProjectDto();
+				
 				entity.setId(resultSet.getInt("id"));
 				entity.setName(resultSet.getString("name"));
 				entity.setDescription(resultSet.getString("description"));
@@ -37,7 +41,6 @@ public class ProjectRepository {
 				projectList.add(entity);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return projectList;
