@@ -22,7 +22,9 @@ public class AuthFilter implements Filter{
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		
-		if(req.getServletPath().startsWith("/login")) {
+		String action = req.getServletPath();
+		
+		if(action.startsWith("/login")) {
 			chain.doFilter(request, response);
 			return;
 		}

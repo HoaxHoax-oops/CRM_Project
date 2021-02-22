@@ -1,9 +1,7 @@
 package com.myclass.service;
 
-import java.sql.Connection;
 import java.util.List;
 
-import com.myclass.connecttion.DbConnection;
 import com.myclass.dto.ProjectDto;
 import com.myclass.entity.Project;
 import com.myclass.repository.ProjectRepository;
@@ -15,7 +13,6 @@ public class ProjectService {
 	}
 	
 	public List<ProjectDto> getAll() {
-		// TODO Auto-generated method stub
 		return projectRepository.findAll();
 	}
 

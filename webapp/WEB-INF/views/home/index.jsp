@@ -7,39 +7,31 @@
 <title>Home page</title>
 </head>
 <body>
-	<div class="container page__container">
-		<div class="row card-group-row">
-			<div class="col-lg-3 col-md-4 card-group-row__col">
-				<div class="card card-group-row__card card-shadow">
-					<div class="p-2 d-flex flex-row align-items-center">
-						<div class="avatar avatar-xs mr-2">
-							<span class="avatar-title rounded-circle text-center bg-primary">
-								<i class="material-icons text-white icon-18pt"> business </i>
-							</span>
-						</div>
-						<a href="#" class="text-dark"> <strong>Companies</strong>
-						</a>
-					</div>
-				</div>
+<!-- Breadcrumb -->
+<div class="container page__heading-container">
+	<div class="page__heading">
+		<div class="d-flex align-items-center">
+			<div>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+						<li class="breadcrumb-item active" aria-current="page">
+							Dashboard</li>
+					</ol>
+				</nav>
+				<h1 class="m-0">Dashboard</h1>
 			</div>
-			<div class="col-lg-3 col-md-4 card-group-row__col">
-				<div class="card card-group-row__card card-shadow">
-					<div class="p-2 d-flex flex-row align-items-center">
-						<div class="avatar avatar-xs mr-2">
-							<span class="avatar-title rounded-circle text-center"> <i
-								class="material-icons text-white icon-18pt"> person_add </i>
-							</span>
-						</div>
-						<a href="#" class="text-dark"> <strong>Create New
-								User</strong>
-						</a>
-					</div>
-				</div>
+			<div class="ml-auto">
+				<a href="" class="btn btn-light"><i
+					class="material-icons icon-16pt text-muted mr-1">settings</i>
+					Settings</a>
 			</div>
-
-
 		</div>
+	</div>
+</div>
+<!-- End Breadcrumb -->
 
+	<div class="container page__container">
 		<div class="card">
 			<div
 				class="card-header card-header-large bg-white d-flex align-items-center">

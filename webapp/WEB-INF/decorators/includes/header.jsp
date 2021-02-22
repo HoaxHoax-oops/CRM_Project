@@ -17,7 +17,7 @@
 				</button>
 
 				<!-- Navbar Brand -->
-				<a href="dashboard.html" class="navbar-brand"> <img
+				<a href="${pageContext.request.contextPath}/home" class="navbar-brand"> <img
 					class="navbar-brand-icon" src="assets/images/logo.png" height="50"
 					alt="Cybersoft" />
 				</a> <span class="mr-3"></span>

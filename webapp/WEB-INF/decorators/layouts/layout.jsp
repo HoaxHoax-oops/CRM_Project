@@ -61,10 +61,6 @@
 </head>
 
 <body class="layout-fixed">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	  <span aria-hidden="true">&times;</span>
-	</button>
-	
 	<div class="preloader"></div>
 
 	<!-- Header Layout -->
@@ -76,14 +72,9 @@
 		<div class="mdk-header-layout__content page">
 			<!-- Navigation bar -->
 			<jsp:include page="/WEB-INF/decorators/includes/navbar.jsp"></jsp:include>
-
-			<!-- Breadcrumb -->
-			<jsp:include page="/WEB-INF/decorators/includes/breadcrumb.jsp"></jsp:include>
-
-			<div class="container page__container">
-				<!-- Page Content -->
-				<dec:body/>
-			</div>
+			
+			<dec:body/>
+			
 		<!-- END Header Layout Content -->
 		
 		</div>

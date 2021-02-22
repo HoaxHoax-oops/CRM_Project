@@ -8,6 +8,32 @@
 <title>Add user</title>
 </head>
 <body>
+<!-- Breadcrumb -->
+<div class="container page__heading-container">
+	<div class="page__heading">
+		<div class="d-flex align-items-center">
+			<div>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+						<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/User">User</a></li>
+						<li class="breadcrumb-item active" aria-current="page">
+							Add User</li>
+					</ol>
+				</nav>
+				<h1 class="m-0">User Manager</h1>
+			</div>
+			<div class="ml-auto">
+				<a href="" class="btn btn-light"><i
+					class="material-icons icon-16pt text-muted mr-1">settings</i>
+					Settings</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumb -->
+
+<div class="container page__container">
 	<div class="card card-form">
 		<div class="row no-gutters">
 			<div class="col-lg-12 card-form__body card-body">
@@ -80,5 +106,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>

@@ -8,11 +8,45 @@
 <title>Role List</title>
 </head>
 <body>
-	<span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Disabled tooltip">
-		<a class="btn btn-primary" href="${pageContext.request.contextPath}/role/add" role="button">
-			<i class="material-icons mr-1">add</i>ADD
-		</a>
-	</span>
+<!-- Breadcrumb -->
+<div class="container page__heading-container">
+	<div class="page__heading">
+		<div class="d-flex align-items-center">
+			<div>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+						<li class="breadcrumb-item active" aria-current="page">
+							Role</li>
+					</ol>
+				</nav>
+				<h1 class="m-0">Role Manager</h1>
+			</div>
+			<div class="ml-auto">
+				<a href="" class="btn btn-light"><i
+					class="material-icons icon-16pt text-muted mr-1">settings</i>
+					Settings</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumb -->
+
+<div class="container page__container">
+	<div class="row card-group-row">
+		<div class="col-lg-3 col-md-4 card-group-row__col">
+			<div class="card card-group-row__card card-shadow">
+				<div class="p-2 d-flex flex-row align-items-center">
+					<div class="avatar avatar-xs mr-2">
+						<span class="avatar-title rounded-circle text-center"> <i
+							class="material-icons text-white icon-18pt"> add </i>
+						</span>
+					</div>
+					<a href="${pageContext.request.contextPath}/role/add" class="text-dark"> <strong>Create New Role</strong></a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="card card-form">
 		<div class="row no-gutters">
 			<div class="col-lg-12 card-form__body border-left">
@@ -58,5 +92,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>
