@@ -15,35 +15,45 @@ public class ProjectRepository {
 
 	public List<ProjectDto> findAll() {
 		Connection conn = DbConnection.getConnection();
-		
-		if(conn == null)
+
+		if (conn == null)
 			return null;
-		
+
 		List<ProjectDto> projectList = new ArrayList<ProjectDto>();
-		String query = "SELECT PROJECT.id, PROJECT.name, PROJECT.description , PROJECT.startDate , PROJECT.endDate , PROJECT.createUser , USER.userName\r\n" + 
-				" FROM PROJECT\r\n" + 
-				" INNER JOIN USER\r\n" + 
-				" ON PROJECT.createUser = USER.id";
+		String query = "SELECT\r\n"
+				+ "	P.id,\r\n"
+				+ "	P.`name`,\r\n"
+				+ "	P.startDate,\r\n"
+				+ "	P.endDate,\r\n"
+				+ "	U.fullname createUserName\r\n"
+				+ "FROM\r\n"
+				+ "	PROJECT P,\r\n"
+				+ "	`USER`	U\r\n"
+				+ "WHERE\r\n"
+				+ "	P.createUser = U.id\r\n"
+				+ "ORDER BY\r\n"
+				+ "	P.id;";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				ProjectDto entity = new ProjectDto();
-				
-				entity.setId(resultSet.getInt("id"));
-				entity.setName(resultSet.getString("name"));
-				entity.setDescription(resultSet.getString("description"));
-				entity.setStartDate(resultSet.getString("startDate"));
-				entity.setEndDate(resultSet.getString("endDate"));
-				entity.setUserName(resultSet.getString("userName"));
-				entity.setCreateUser(resultSet.getInt("createUser"));
-				
-				projectList.add(entity);
+				ProjectDto dto = new ProjectDto();
+
+				dto.setId(resultSet.getInt("id"));
+				dto.setName(resultSet.getString("name"));
+				dto.setStartDate(resultSet.getDate("startDate"));
+				dto.setEndDate(resultSet.getDate("endDate"));
+				dto.setCreateUserName(resultSet.getString("createUserName"));
+
+				projectList.add(dto);
 			}
+			
+			return projectList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return projectList;
+		
+		return null;
 	}
 
 	public int remove(int idDelete) {
@@ -59,7 +69,7 @@ public class ProjectRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return -1;
 	}
 
@@ -67,7 +77,7 @@ public class ProjectRepository {
 		// TODO Auto-generated method stub
 		Connection conn = DbConnection.getConnection();
 		String query = "INSERT INTO PROJECT (name , description , startDate , endDate , createUser) value ( ? , ? , ? , ? , ?)";
-		
+
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, entity.getName());
@@ -83,14 +93,43 @@ public class ProjectRepository {
 		return -1;
 	}
 
-	public Project findById(int idEdit) {
-		// TODO Auto-generated method stub
+	public Project findById(int id) {
 		Connection conn = DbConnection.getConnection();
-		String query = "SELECT * FROM PROJECT WHERE id=?";
+		
+		if(conn == null)
+			return null;
+		
+		String query = "SELECT\r\n"
+				+ "	P.id,\r\n"
+				+ "	P.`name`,\r\n"
+				+ "	P.startDate,\r\n"
+				+ "	P.endDate,\r\n"
+				+ "	P.createUserName,\r\n"
+				+ "	U.fullname `joinUserName`\r\n"
+				+ "FROM\r\n"
+				+ "	( SELECT\r\n"
+				+ "			P.id,\r\n"
+				+ "			P.`name`,\r\n"
+				+ "			P.startDate,\r\n"
+				+ "			P.endDate,\r\n"
+				+ "			U.fullname createUserName\r\n"
+				+ "		FROM\r\n"
+				+ "			PROJECT P,\r\n"
+				+ "			`USER`	U\r\n"
+				+ "		WHERE\r\n"
+				+ "			P.createUser = U.id ) AS P,\r\n"
+				+ "	`USER`	U,\r\n"
+				+ "	USER_PROJECT UP\r\n"
+				+ "WHERE\r\n"
+				+ "	P.id = UP.projectId \r\n"
+				+ "	AND\r\n"
+				+ "	U.id = UP.userId\r\n"
+				+ "ORDER BY\r\n"
+				+ "	P.id;";
 		Project entity = null;
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
-			statement.setInt(1, idEdit);
+			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				entity = new Project();
@@ -126,6 +165,5 @@ public class ProjectRepository {
 		}
 		return -1;
 	}
-
 
 }

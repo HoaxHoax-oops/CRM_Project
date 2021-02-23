@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,12 +56,14 @@
 						<thead>
 							<tr>
 								<th style="width: 24px;">ID</th>
-								<th style="width: 37px;">Name</th>
-								<th>Description</th>
+								<th>Name</th>
+								<th style="width: 150px;">Start Date</th>
+								<th style="width: 150px;">End Date</th>
+								<th>Create User</th>
 							</tr>
 						</thead>
-						<tbody class="list" id="staff">
-							<c:forEach items="${ listRole }" var="item">
+						<tbody class="list" id="project">
+							<c:forEach items="${ projects }" var="item">
 								<tr class="selected">
 									<td><small class="text-muted">${ item.id }</small></td>
 									<td>
@@ -70,15 +73,25 @@
 											</div>
 										</div>
 									</td>
-									<td><small class="text-muted">${ item.description }</small></td>
+									<td>
+										<small class="text-muted">
+											${ item.startDate == null ? "Unknown" : item.startDate }
+										</small>
+									</td>
+									<td>
+										<small class="text-muted">
+											${ item.endDate == null ? "Unknown" : item.endDate }
+										</small>
+									</td>
+									<td>${ item.createUserName }</td>
 									<td class="text-right">
 										<div class="btn-group btn-group-sm">
 											<a role="button" class="btn btn-danger btn-sm" 
-												href="${pageContext.request.contextPath}/role/delete?id=${ item.id }">
+												href="${pageContext.request.contextPath}/project/delete?id=${ item.id }">
 												<i class="material-icons">delete</i>
 											</a>
 											<a role="button" class="btn btn-success btn-sm"
-												href="${pageContext.request.contextPath}/role/edit?id=${ item.id }">
+												href="${pageContext.request.contextPath}/project/edit?id=${ item.id }">
 												<i class="material-icons">create</i>
 											</a>
 										</div>

@@ -2,23 +2,26 @@ package com.myclass.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+
 import com.myclass.dto.ProjectDto;
 import com.myclass.entity.Project;
 import com.myclass.repository.ProjectRepository;
 
 public class ProjectService {
-	private ProjectRepository projectRepository;
+	private ProjectRepository 	projectRepository;
+	private ModelMapper			modelMapper;
+
 	public ProjectService() {
-		projectRepository = new ProjectRepository();
+		projectRepository 	= new ProjectRepository();
+		modelMapper			= new ModelMapper();
 	}
-	
+
 	public List<ProjectDto> getAll() {
 		return projectRepository.findAll();
 	}
 
 	public int deleteUser(int idDelete) {
-		// TODO Auto-generated method stub
-		
 		return projectRepository.remove(idDelete);
 	}
 
@@ -36,7 +39,7 @@ public class ProjectService {
 			// TODO: handle exception
 			return -1;
 		}
-		
+
 	}
 
 	public int update(ProjectDto dto) {
@@ -51,9 +54,8 @@ public class ProjectService {
 		return projectRepository.edit(project);
 	}
 
-	public ProjectDto getById(int idEdit) {
-		// TODO Auto-generated method stub
-		Project project = projectRepository.findById(idEdit);
+	public ProjectDto getById(int id) {
+		Project project = projectRepository.findById(id);
 		ProjectDto dto = new ProjectDto();
 		dto.setId(project.getId());
 		dto.setName(project.getName());
@@ -61,7 +63,7 @@ public class ProjectService {
 		dto.setStartDate(project.getStartDate());
 		dto.setEndDate(project.getEndDate());
 		dto.setCreateUser(project.getCreateUser());
-		
+
 		return dto;
 	}
 
