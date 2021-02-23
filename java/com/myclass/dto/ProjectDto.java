@@ -1,69 +1,106 @@
 package com.myclass.dto;
 
+import java.util.Date;
+import java.util.List;
+
 public class ProjectDto {
-	public int		id;
-	public String	name;
-	public String	description;
-	public String	startDate;
-	public String	endDate;
-	public int		createUser;
-	public String	userName;
+	/* properties */
+	private int 			id;
+	private String 			name;
+	private String 			description;
+	private Date 			startDate;
+	private Date 			endDate;
+	private int 			createUser;
+	private String 			createUserName;
+	private List<String> 	joinUsers;
+
+	/* constructors */
+	public ProjectDto(int id, String name, String description, Date startDate, Date endDate, int createUser,
+			String createUserName, List<String> joinUsers) {
+		this.id 			= id;
+		this.name 			= name;
+		this.description 	= description;
+		this.startDate 		= startDate;
+		this.endDate 		= endDate;
+		this.createUser 	= createUser;
+		this.createUserName = createUserName;
+		this.joinUsers		= joinUsers;
+	}
 	
 	public ProjectDto() {
-		super();
+		this.id 			= 0;
+		this.name 			= "";
+		this.description 	= "";
+		this.startDate 		= null;
+		this.endDate 		= null;
+		this.createUser 	= 0;
+		this.createUserName = "";
+		this.joinUsers		= null;
 	}
-	public ProjectDto(int id, String name, String description, String startDate, String endDate, int createUser , String userName) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.createUser = createUser;
-		this.userName = userName;
-	}
+
+	/* getters/setters */
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getStartDate() {
+
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
+
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
 	public int getCreateUser() {
 		return createUser;
 	}
+
 	public void setCreateUser(int createUser) {
 		this.createUser = createUser;
 	}
-	public String getUserName() {
-		return userName;
+
+	public String getCreateUserName() {
+		return createUserName;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
 	}
-	
-	
+
+	public List<String> getJoinUsers() {
+		return joinUsers;
+	}
+
+	public void setJoinUsers(List<String> joinUsers) {
+		this.joinUsers = joinUsers;
+	}
+
 }

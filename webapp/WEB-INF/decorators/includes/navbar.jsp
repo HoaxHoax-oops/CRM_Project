@@ -35,7 +35,7 @@
 						class="nav-link dropdown-toggle" data-toggle="dropdown"> Role
 					</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/role"> Manage User </a> <a
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/role"> Manage Role </a> <a
 								class="dropdown-item" href="${pageContext.request.contextPath}/role/add"> Create Role </a>
 						</div>
 					</li>

@@ -1,6 +1,8 @@
 package com.myclass.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +14,10 @@ import com.myclass.service.ProjectService;
 import com.myclass.util.ControllerUrl;
 import com.myclass.util.JspPath;
 
-@WebServlet(urlPatterns = { "/project", "/project/add" })
+@WebServlet(name = "projectController", urlPatterns = { ControllerUrl.URL_PROJECT,
+														ControllerUrl.URL_PROJECT_ADD,
+														ControllerUrl.URL_PROJECT_DELETE,
+														ControllerUrl.URL_PROJECT_EDIT})
 public class ProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -25,12 +30,15 @@ public class ProjectController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
+		
 		switch (action) {
-		case ControllerUrl.URL_PROJECT:
-			req.setAttribute("projectList", projectService.getAll());
+		case ControllerUrl.URL_PROJECT:{
+			List<ProjectDto> projects = projectService.getAll();
+			
+			req.setAttribute("projects", projects);
 			req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
-
 			break;
+		}
 		case ControllerUrl.URL_PROJECT_DELETE:
 			int idDelete = Integer.parseInt(req.getParameter("id"));
 			int result = projectService.deleteUser(idDelete);
@@ -44,53 +52,48 @@ public class ProjectController extends HttpServlet {
 		case ControllerUrl.URL_PROJECT_ADD:
 			req.getRequestDispatcher(JspPath.JSP_PROJECT_ADD).forward(req, resp);
 			break;
-		case ControllerUrl.URL_PROJECT_EDIT:
-			req.setAttribute("project", projectService.getById(Integer.parseInt(req.getParameter("id"))));
+		case ControllerUrl.URL_PROJECT_EDIT:{
+			int id = Integer.parseInt(req.getParameter("id"));
+			
+			ProjectDto dto = projectService.getById(id);
+			
+			req.setAttribute("project", dto);
 			req.getRequestDispatcher(JspPath.JSP_PROJECT_EDIT).forward(req, resp);
+			break;
+		}
 		default:
 			break;
 		}
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String action = req.getServletPath();
-		switch (action) {
-		case ControllerUrl.URL_PROJECT_ADD:
-			ProjectDto projectDto = extractUserFromRequest(req);
-			int result = projectService.add(projectDto);
-			if (result == -1) {
-				req.setAttribute("message", "Thêm project thất bại");
-				req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
-				return;
-			}
-			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_PROJECT);
-			break;
-		case ControllerUrl.URL_PROJECT_EDIT:
-			ProjectDto dto = extractUserFromRequest(req);
-			dto.setId(Integer.parseInt(req.getParameter("id")));
-			int resultEdit = projectService.update(dto);
-			if (resultEdit == -1) {
-				req.setAttribute("message", "Edit project thất bại");
-				req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
-				return;
-			}
-			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_PROJECT);
-		default:
-			break;
-		}
-
-	}
-
-	private ProjectDto extractUserFromRequest(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		ProjectDto projectDto = new ProjectDto();
-		projectDto.setName(req.getParameter("name"));
-		projectDto.setDescription(req.getParameter("description"));
-		projectDto.setStartDate(req.getParameter("startDate"));
-		projectDto.setEndDate(req.getParameter("endDate"));
-		projectDto.setCreateUser(Integer.parseInt(req.getParameter("createUser")));
-
-		return projectDto;
-	}
+//	@Override
+//	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		String action = req.getServletPath();
+//		switch (action) {
+//		case ControllerUrl.URL_PROJECT_ADD:
+//			ProjectDto projectDto = extractUserFromRequest(req);
+//			int result = projectService.add(projectDto);
+//			if (result == -1) {
+//				req.setAttribute("message", "Thêm project thất bại");
+//				req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
+//				return;
+//			}
+//			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_PROJECT);
+//			break;
+//		case ControllerUrl.URL_PROJECT_EDIT:
+//			ProjectDto dto = extractUserFromRequest(req);
+//			dto.setId(Integer.parseInt(req.getParameter("id")));
+//			int resultEdit = projectService.update(dto);
+//			if (resultEdit == -1) {
+//				req.setAttribute("message", "Edit project thất bại");
+//				req.getRequestDispatcher(JspPath.JSP_PROJECT).forward(req, resp);
+//				return;
+//			}
+//			resp.sendRedirect(req.getContextPath() + ControllerUrl.URL_PROJECT);
+//		default:
+//			break;
+//		}
+//
+//	}
+	
 }
