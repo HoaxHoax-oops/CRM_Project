@@ -3,13 +3,13 @@
 
 <div id="header" class="mdk-header bg-dark js-mdk-header m-0" data-fixed
 	data-effects="waterfall">
+	
 	<div class="mdk-header__content">
 		<div
 			class="navbar navbar-expand-sm navbar-main navbar-dark bg-dark pr-0"
 			id="navbar" data-primary>
 			<div class="container">
 				<!-- Navbar toggler -->
-
 				<button
 					class="navbar-toggler navbar-toggler-right d-block d-md-none"
 					type="button" data-toggle="sidebar">
