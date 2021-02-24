@@ -40,6 +40,11 @@
 						</div>
 					</li>
 				</ul>
+				<button type="button" class="btn btn-warning d-inline-flex invisible"
+						data-toggle="toastr" data-toastr-type="${ typeOfMessage }"
+						data-toastr-title="${ message }" id="modal"
+						>Click me
+				</button>
 			</div>
 			<!-- // END Default Navigation Bar -->
 		</div>

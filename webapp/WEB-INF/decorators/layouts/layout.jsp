@@ -57,6 +57,9 @@
 <link type="text/css"
 	href="${pageContext.request.contextPath}/assets/css/vendor-flatpickr-airbnb.rtl.css"
 	rel="stylesheet" />
+	
+<!-- Toastr -->
+<link type="text/css" href="assets/vendor/toastr.min.css" rel="stylesheet">
 
 </head>
 
@@ -95,6 +98,11 @@
       'mini': 'mini-dashboard.html'}">
 		</app-settings>
 	</div>
+	
+	<script>
+		document.getElementById("modal").click();
+	</script>
+	
 	<!-- jQuery -->
 	<script src="${pageContext.request.contextPath}/assets/vendor/jquery.min.js"></script>
 
@@ -137,6 +145,18 @@
 
 	<!-- Chart Samples -->
 	<script src="${pageContext.request.contextPath}/assets/js/page.dashboard.js"></script>
+	
+	<!-- Toastr -->
+    <script src="${pageContext.request.contextPath}/assets/vendor/toastr.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/toastr.js"></script>
+    
+    <script>
+    	var str = "<c:out value='${message}'/>";
+    
+    	if (str != "") {
+    		document.getElementById("modal").click();
+    	}
+	</script>
 </body>
 
 </html>
